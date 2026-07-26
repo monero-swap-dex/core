@@ -1,1 +1,27 @@
+name: Python Type Check
 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  type_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'  # or your target version
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mypy
+          # install other dependencies if needed
+      - name: Run mypy
+        run: |
+          mypy --ignore-missing-imports --strict your_module_or_package/
